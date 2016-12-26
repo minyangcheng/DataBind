@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         person.address="九江";
         person.nickName="yangcheng";
         person.sex=1;
-        person.phone="15257178923";;
+        person.phone="15257892121";;
         person.remark="这是一条备注";
         //向控件赋值
         DataBind.fillData(person, mVp);
