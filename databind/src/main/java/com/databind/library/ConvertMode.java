@@ -1,6 +1,4 @@
-package com.min.databind.bind;
-
-import java.util.regex.Pattern;
+package com.databind.library;
 
 /**
  * Created by minyangcheng on 2016/11/11.

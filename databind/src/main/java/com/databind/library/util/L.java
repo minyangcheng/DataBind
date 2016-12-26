@@ -1,4 +1,4 @@
-package com.min.databind.util;
+package com.databind.library.util;
 
 import android.util.Log;
 

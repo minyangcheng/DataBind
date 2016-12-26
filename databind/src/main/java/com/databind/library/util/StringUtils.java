@@ -1,4 +1,4 @@
-package com.min.databind.util;
+package com.databind.library.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -18,9 +18,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by cg123 on 2015/8/20.
- */
 public class StringUtils {
     /**
      * 判断给定字符串是否空白串。 空白串是指由空格、制表符、回车符、换行符组成的字符串 若输入字符串为null或空字符串，返回true

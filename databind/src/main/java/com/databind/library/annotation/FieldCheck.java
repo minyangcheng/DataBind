@@ -1,6 +1,6 @@
-package com.min.databind.bind.annotation;
+package com.databind.library.annotation;
 
-import com.min.databind.bind.ConvertMode;
+import com.databind.library.CheckMode;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -12,8 +12,8 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface FieldConvert {
-
-    ConvertMode value();
-
+public @interface FieldCheck {
+    int order() default 0;
+    String msg() default "";
+    CheckMode[] checkFlows() default {CheckMode.EMPTY};
 }

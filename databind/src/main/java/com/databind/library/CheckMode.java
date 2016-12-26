@@ -1,6 +1,6 @@
-package com.min.databind.bind;
+package com.databind.library;
 
-import com.min.databind.util.StringUtils;
+import com.databind.library.util.StringUtils;
 
 /**
  * Created by minyangcheng on 2016/11/11.

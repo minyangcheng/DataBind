@@ -1,11 +1,11 @@
-package com.min.databind.bind;
+package com.databind.library;
 
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.min.databind.bind.annotation.FieldCheck;
+import com.databind.library.annotation.FieldCheck;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;

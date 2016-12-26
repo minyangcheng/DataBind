@@ -1,4 +1,4 @@
-package com.min.databind.bind;
+package com.databind.library;
 
 /**
  * Created by minyangcheng on 2016/11/11.

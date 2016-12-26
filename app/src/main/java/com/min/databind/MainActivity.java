@@ -5,10 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.ViewGroup;
 
+import com.databind.library.DataBind;
+import com.databind.library.util.L;
 import com.min.databind.bean.Person;
-import com.min.databind.bind.DataBind;
 import com.min.databind.util.GsonUtil;
-import com.min.databind.util.L;
 import com.min.databind.util.ToastUtils;
 
 import butterknife.Bind;
@@ -46,7 +46,9 @@ public class MainActivity extends AppCompatActivity {
     void clickBtngetData() {
         Person person=DataBind.getData(Person.class,mVp);
         if(person!=null){
-            L.d(TAG,"person=%s", GsonUtil.toPrettyJson(person));
+            String personJsonStr=GsonUtil.toPrettyJson(person);
+            ToastUtils.showShortToast(this,personJsonStr);
+            L.d(TAG,"person=%s", personJsonStr);
         }
     }
 
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         if(TextUtils.isEmpty(str)){
             L.d(TAG,"check is pass");
         }else{
+            ToastUtils.showShortToast(this,str);
             L.d(TAG,"find a field is empty : msg=%s", str);
         }
     }
