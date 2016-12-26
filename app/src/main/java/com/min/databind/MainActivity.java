@@ -38,12 +38,14 @@ public class MainActivity extends AppCompatActivity {
         person.nickName="yangcheng";
         person.sex=1;
         person.phone="15257178923";;
-
+        person.remark="这是一条备注";
+        //向控件赋值
         DataBind.fillData(person, mVp);
     }
 
     @OnClick(R.id.getData)
     void clickBtngetData() {
+        //从控件取值
         Person person=DataBind.getData(Person.class,mVp);
         if(person!=null){
             String personJsonStr=GsonUtil.toPrettyJson(person);
@@ -54,8 +56,10 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.check)
     void clickBtncheck() {
-        String str=DataBind.isEmpty(Person.class,mVp);
+        //控件上的输入项校验
+        String str=DataBind.check(Person.class,mVp);
         if(TextUtils.isEmpty(str)){
+            ToastUtils.showShortToast(this,"check is pass");
             L.d(TAG,"check is pass");
         }else{
             ToastUtils.showShortToast(this,str);

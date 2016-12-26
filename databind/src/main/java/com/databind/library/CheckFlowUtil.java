@@ -5,13 +5,21 @@ package com.databind.library;
  */
 public class CheckFlowUtil {
 
-    public static boolean check(String str ,CheckMode[] checkModes){
-        for(CheckMode checkMode : checkModes){
+    /**
+     * 返回正数则为检查不通过
+     * @param str
+     * @param checkModes
+     * @return
+     */
+    public static int check(String str ,CheckMode[] checkModes){
+        CheckMode checkMode=null;
+        for(int i=0;i<checkModes.length;i++){
+            checkMode=checkModes[i];
             if(!checkMode.check(str)){
-                return false;
+                return i;
             }
         }
-        return true;
+        return -1;
     }
 
 }

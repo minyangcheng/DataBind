@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.databind.library.annotation.FieldCheck;
 
@@ -60,6 +61,9 @@ public class BindUtils {
         if(view instanceof EditText){
             EditText et= (EditText) view;
             et.setText(value.toString());
+        }else if(view instanceof TextView){
+            TextView tv= (TextView) view;
+            tv.setText(value.toString());
         }
     }
 
@@ -70,6 +74,9 @@ public class BindUtils {
         if(view instanceof EditText){
             EditText et= (EditText) view;
             return et.getText().toString();
+        }else if(view instanceof TextView){
+            TextView tv= (TextView) view;
+            return tv.getText().toString();
         }
         return null;
     }

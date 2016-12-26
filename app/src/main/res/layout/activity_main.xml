@@ -128,4 +128,21 @@
             android:tag="phone"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:tag="tt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="remark" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:tag="remark"/>
+    </LinearLayout>
+
 </LinearLayout>

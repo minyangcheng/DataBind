@@ -5,6 +5,8 @@ import android.view.ViewGroup;
 
 import com.databind.library.annotation.FieldCheck;
 import com.databind.library.annotation.FieldConvert;
+import com.databind.library.util.L;
+import com.databind.library.util.StringUtils;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
@@ -16,6 +18,13 @@ import java.util.Map;
  */
 public class DataBind {
 
+    private static final String TAG=DataBind.class.getSimpleName();
+
+    /**
+     * 向控件上赋值
+     * @param obj
+     * @param vp
+     */
     public static void fillData(Object obj , ViewGroup vp){
         if(obj==null || vp==null){
             return;
@@ -47,6 +56,13 @@ public class DataBind {
         }
     }
 
+    /**
+     * 从控件上获取数据
+     * @param clazz
+     * @param vp
+     * @param <T>
+     * @return
+     */
     public static <T> T getData(Class<T> clazz , ViewGroup vp){
         if(clazz==null || vp==null){
             return null;
@@ -85,7 +101,13 @@ public class DataBind {
         }
     }
 
-    public static String isEmpty(Class clazz , ViewGroup vp){
+    /**
+     * 校验，返回空则检验通过
+     * @param clazz
+     * @param vp
+     * @return
+     */
+    public static String check(Class clazz , ViewGroup vp){
         if(clazz==null || vp==null){
             return null;
         }
@@ -98,6 +120,8 @@ public class DataBind {
             FieldCheck fieldCheck;
             String viewValue;
             CheckMode[] checkModes;
+            int msgIndex=-1;
+            String alertMsg=null;
             for(Field f : fields){
                 f.setAccessible(true);
                 fieldName=f.getName();
@@ -106,8 +130,17 @@ public class DataBind {
                 if(fieldCheck !=null){
                     targetView=BindUtils.findViewByTag(vp,fieldName);
                     viewValue=BindUtils.getDataFromView(targetView);
-                    if(!CheckFlowUtil.check(viewValue,checkModes)){
-                        return fieldCheck.msg();
+                    L.d(TAG,"msg length=%s , checkMode length=%s , %s",fieldCheck.msg().length,checkModes.length,fieldName);
+                    msgIndex=CheckFlowUtil.check(viewValue,checkModes);
+                    if(msgIndex>=0){
+                        if(msgIndex>=fieldCheck.msg().length){
+                            msgIndex=0;
+                        }
+                        alertMsg=fieldCheck.msg()[msgIndex];
+                        if(StringUtils.isEmpty(alertMsg)){
+                            alertMsg="输入信息不合法";
+                        }
+                        return alertMsg;
                     }
                 }
             }

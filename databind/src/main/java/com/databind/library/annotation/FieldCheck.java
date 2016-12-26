@@ -14,6 +14,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface FieldCheck {
     int order() default 0;
-    String msg() default "";
-    CheckMode[] checkFlows() default {CheckMode.EMPTY};
+    String[] msg() default "";
+    CheckMode[] checkFlows() default {};
 }

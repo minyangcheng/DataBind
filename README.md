@@ -22,25 +22,26 @@ javabean对象：
 ```java
 public class Person {
 
-    @FieldCheck(order = 0, msg = "name can not be empty")
+    @FieldCheck(order = 0, msg = "name can not be empty",checkFlows=CheckMode.EMPTY)
     public String name;
 
     @FieldConvert(ConvertMode.ITEM)
-    @FieldCheck(order = 1, msg = "age can not be empty")
+    @FieldCheck(order = 1, msg = "age can not be empty",checkFlows=CheckMode.EMPTY)
     public byte age;
 
-    @FieldCheck(order = 1, msg = "phone can not be empty" , checkFlows = {CheckMode.EMPTY,CheckMode.PHONE})
+    @FieldCheck(order = 2,msg={"phone can not be empty","phone is no right"},checkFlows = {CheckMode.EMPTY,CheckMode.PHONE})
     public String phone;
 
-    @FieldCheck(order = 2, msg = "address can not be empty")
+    @FieldCheck(order = 3, msg = "address can not be empty",checkFlows=CheckMode.EMPTY)
     public String address;
 
-    @FieldCheck(order = 3, msg = "nickName can not be empty")
-    public String nickName;
+    public String nickName;  //此字段不做校验和转换
 
-    @FieldConvert(ConvertMode.SEX)
-    @FieldCheck(order = 4, msg = "sex can not be empty")
+    @FieldConvert(ConvertMode.SEX)  //转换
+    @FieldCheck(order = 4, msg = "sex can not be empty",checkFlows=CheckMode.EMPTY)  //校验
     public int sex;  //1男 2女
+
+    public String remark;
 
 }
 ```
@@ -177,44 +178,66 @@ layout布局:
             android:tag="phone"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:tag="tt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="remark" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:tag="remark"/>
+    </LinearLayout>
+
 </LinearLayout>
+
 ```
 
 activity中的操作方法：
 ```java
 @OnClick(R.id.fillData)
-    void clickBtnFillData() {
-        Person person=new Person();
-        person.name="minyangcheng";
-        person.age=26;
-        person.address="九江";
-        person.nickName="yangcheng";
-        person.sex=1;
-        person.phone="15257178923";;
+void clickBtnFillData() {
+    Person person=new Person();
+    person.name="minyangcheng";
+    person.age=26;
+    person.address="九江";
+    person.nickName="yangcheng";
+    person.sex=1;
+    person.phone="15257178923";;
+    person.remark="这是一条备注";
+    //向控件赋值
+    DataBind.fillData(person, mVp);
+}
 
-        DataBind.fillData(person, mVp);
+@OnClick(R.id.getData)
+void clickBtngetData() {
+    //从控件取值
+    Person person=DataBind.getData(Person.class,mVp);
+    if(person!=null){
+        String personJsonStr=GsonUtil.toPrettyJson(person);
+        ToastUtils.showShortToast(this,personJsonStr);
+        L.d(TAG,"person=%s", personJsonStr);
     }
+}
 
-    @OnClick(R.id.getData)
-    void clickBtngetData() {
-        Person person=DataBind.getData(Person.class,mVp);
-        if(person!=null){
-            String personJsonStr=GsonUtil.toPrettyJson(person);
-            ToastUtils.showShortToast(this,personJsonStr);
-            L.d(TAG,"person=%s", personJsonStr);
-        }
+@OnClick(R.id.check)
+void clickBtncheck() {
+    //控件上的输入项校验
+    String str=DataBind.check(Person.class,mVp);
+    if(TextUtils.isEmpty(str)){
+        ToastUtils.showShortToast(this,"check is pass");
+        L.d(TAG,"check is pass");
+    }else{
+        ToastUtils.showShortToast(this,str);
+        L.d(TAG,"find a field is empty : msg=%s", str);
     }
-
-    @OnClick(R.id.check)
-    void clickBtncheck() {
-        String str=DataBind.isEmpty(Person.class,mVp);
-        if(TextUtils.isEmpty(str)){
-            L.d(TAG,"check is pass");
-        }else{
-            ToastUtils.showShortToast(this,str);
-            L.d(TAG,"find a field is empty : msg=%s", str);
-        }
-    }
+}
 ```
 
 ## 总结
